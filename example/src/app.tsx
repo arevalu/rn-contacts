@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import React, { FunctionComponent } from 'react';
 
 import { StyleSheet, View, Text } from 'react-native';
