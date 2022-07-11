@@ -1,0 +1,138 @@
+{
+  "root": true,
+  "env": {
+    "es6": true
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "extends": [
+    "plugin:react/recommended",
+    "airbnb-base",
+    "airbnb-base/rules/strict",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:import/typescript",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:prettier/recommended"
+  ],
+  "plugins": [
+    "react",
+    "react-native",
+    "react-hooks",
+    "@typescript-eslint",
+    "prettier",
+    "unicorn"
+  ],
+  "rules": {
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "js": "never",
+        "jsx": "never",
+        "ts": "never",
+        "tsx": "never"
+      }
+    ],
+    "import/prefer-default-export": "off",
+
+    // ESLint
+    "no-use-before-define": "off",
+    "global-require": "off",
+    "no-plusplus": "off",
+    "complexity": ["error", {"max": 12}],
+    "max-depth": ["error", {"max": 3}],
+    "max-nested-callbacks": ["error", {"max": 2}],
+    "max-params": ["error", {"max": 3}],
+    "max-statements": ["error", {"max": 12}],
+    "arrow-body-style": ["error", "as-needed"],
+    "object-property-newline": ["error", {"allowAllPropertiesOnSameLine": false}],
+    "no-warning-comments": [
+      "error",
+      {
+        "terms": ["fixme"],
+        "location": "anywhere"
+      }
+    ],
+
+    // React
+    "react/jsx-filename-extension": ["error", {"extensions": [".tsx"]}],
+    "react/prop-types": "off",
+    "react/prefer-es6-class": ["error", "never"],
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "react/jsx-curly-brace-presence": ["error", "never"],
+    "react/display-name": "off",
+    "import/order": [
+      "error",
+      {
+        "groups": ["builtin", "external", "internal"],
+        "pathGroups": [
+          {
+            "pattern": "react",
+            "group": "external",
+            "position": "before"
+          }
+        ],
+        "pathGroupsExcludedImportTypes": ["react"],
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
+      }
+    ],
+    "react/self-closing-comp": ["error"],
+
+    // React Native
+    "react-native/no-unused-styles": "error",
+    "react-native/split-platform-components": "off",
+    "react-native/no-inline-styles": "error",
+    "react-native/no-color-literals": "error",
+    "react-native/no-raw-text": "off",
+
+    // Typescript
+    "@typescript-eslint/no-use-before-define": ["error"],
+    "@typescript-eslint/no-empty-function": "off",
+    "@typescript-eslint/explicit-function-return-type": [
+      "error",
+      {
+        "allowExpressions": true,
+        "allowTypedFunctionExpressions": true,
+        "allowHigherOrderFunctions": false
+      }
+    ],
+    "no-shadow": "off",
+
+    // Unicorn
+    "unicorn/no-abusive-eslint-disable": "error",
+    "unicorn/no-array-instanceof": "error",
+    "unicorn/prefer-includes": "error",
+    "unicorn/no-unsafe-regex": "off",
+    "unicorn/throw-new-error": "error",
+    "unicorn/regex-shorthand": "error",
+    "unicorn/filename-case": [
+      "error",
+      {
+        "case": "kebabCase"
+      }
+    ]
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    },
+    "import/resolver": {
+      "node": {
+        "paths": ["./src"]
+      },
+      "babel-module": {}
+    }
+  }
+}
