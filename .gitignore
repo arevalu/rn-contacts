@@ -44,6 +44,7 @@ android.iml
 # Ruby / Cocoapods
 #
 example/ios/Pods
+example/ios/.xcode.env.local
 /vendor/bundle/
 
 # node.js
