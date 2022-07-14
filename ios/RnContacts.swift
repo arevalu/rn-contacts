@@ -45,11 +45,11 @@ class RnContacts: NSObject {
                     
                     resolve(formattedContacts)
                 } catch {
-                    let error = NSError(domain: "error-get-contacts", code: 200, userInfo: nil)
+                    let error = NSError(domain: "error-get-contacts", code: 200)
                     reject("ERROR", "Failed to get contacts.", error)
                 }
             } else {
-                let error = NSError(domain: "error-access-denied", code: 200, userInfo: nil)
+                let error = NSError(domain: "error-access-denied", code: 200)
                 reject("ERROR", "Access denied.", error)
                 return
             }
