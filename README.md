@@ -11,12 +11,27 @@ npm install rn-contacts
 ## Usage
 
 ```js
-import { multiply } from "rn-contacts";
+import { getAllContacts } from "rn-contacts";
 
 // ...
 
-const result = await multiply(3, 7);
+const fetchContacts = async () => {
+  try {
+    const result = await getAllContacts();
+  } catch(e) {
+    console.log(e);
+  }
+}
 ```
+
+## Permissions
+
+### iOS
+
+Add kit specific **"permission"** keys to your Xcode `Info.plist` file, in order to make requestPermission work. Otherwise your app **crashes** when requesting the specific permission. 
+* Open `Info.plist`. 
+* Add key `Privacy - Contacts Usage Description` with your kit specific permission. 
+  * The value for the key is optional in development. If you submit to the App Store the value must explain why you need this permission.
 
 ## Contributing
 
