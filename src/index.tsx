@@ -1,25 +1,5 @@
-import { NativeModules, Platform } from 'react-native';
+import { RnContacts } from './helpers';
+import type { Contact } from './types';
 
-const LINKING_ERROR =
-  `The package 'rn-contacts' doesn't seem to be linked. Make sure: \n\n${Platform.select(
-    {
-      ios: "- You have run 'pod install'\n",
-      default: '',
-    }
-  )}- You rebuilt the app after installing the package\n` +
-  `- You are not using Expo managed workflow\n`;
-
-const RnContacts = NativeModules.RnContacts
-  ? NativeModules.RnContacts
-  : new Proxy(
-      {},
-      {
-        get() {
-          throw new Error(LINKING_ERROR);
-        },
-      }
-    );
-
-export function multiply(a: number, b: number): Promise<number> {
-  return RnContacts.multiply(a, b);
-}
+export const getAllContacts = async (): Promise<Contact[]> =>
+  RnContacts.getAllContacts();

@@ -61,6 +61,7 @@
         "location": "anywhere"
       }
     ],
+    "consistent-return": "off",
 
     // React
     "react/jsx-filename-extension": ["error", {"extensions": [".tsx"]}],
