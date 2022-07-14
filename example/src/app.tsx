@@ -1,29 +1,21 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import React, { FunctionComponent } from 'react';
+import {
+  initialWindowMetrics,
+  SafeAreaProvider,
+} from 'react-native-safe-area-context';
+import { SafeArea } from './components';
+import { Home } from './screens';
 
-import { StyleSheet, View, Text } from 'react-native';
-import { multiply } from 'rn-contacts';
+/**
+ * App
+ */
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
-
-const App: FunctionComponent = () => {
-  const [result, setResult] = React.useState<number | undefined>();
-
-  React.useEffect(() => {
-    multiply(3, 7).then(setResult);
-  }, []);
-
-  return (
-    <View style={styles.container}>
-      <Text>Result: {result}</Text>
-    </View>
-  );
-};
+const App: FunctionComponent = () => (
+  <SafeAreaProvider initialMetrics={initialWindowMetrics}>
+    <SafeArea>
+      <Home />
+    </SafeArea>
+  </SafeAreaProvider>
+);
 
 export default App;
