@@ -9,6 +9,7 @@ import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { Contact, ContactError, getAllContacts } from 'rn-contacts';
 
 import { ContactItem } from '../components/contact-item';
+import { PermitType, usePermission } from '../core/permission/use-permission';
 
 /**
  * Constants
@@ -36,6 +37,17 @@ const styles = StyleSheet.create({
   list: {
     flex: 1,
   },
+  listContainer: {
+    flexGrow: 1,
+  },
+  emptyList: {
+    alignItems: 'center',
+    flex: 1,
+    justifyContent: 'center',
+  },
+  emptyListText: {
+    fontSize: 24,
+  },
 });
 
 /**
@@ -43,8 +55,13 @@ const styles = StyleSheet.create({
  */
 
 export const Home: FunctionComponent = () => {
-  const [result, setResult] = useState<Contact[]>();
+  const [result, setResult] = useState<Contact[]>([]);
   const [error, setError] = useState<ContactError>();
+  const {
+    permissionGranted,
+    checkPermission,
+    requirePermission,
+  } = usePermission(PermitType.CONTACTS);
 
   const fetchContacts = async (): Promise<void> => {
     try {
@@ -61,8 +78,17 @@ export const Home: FunctionComponent = () => {
   );
 
   useEffect(() => {
-    fetchContacts();
-  }, []);
+    checkPermission();
+
+    console.log('permissionGranted: ', permissionGranted);
+    if (permissionGranted) {
+      fetchContacts();
+    } else {
+      requirePermission();
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [permissionGranted]);
 
   return (
     <View style={styles.container}>
@@ -81,6 +107,12 @@ export const Home: FunctionComponent = () => {
           )}
           stickyHeaderIndices={[0]}
           style={styles.list}
+          contentContainerStyle={styles.listContainer}
+          ListEmptyComponent={() => (
+            <View style={styles.emptyList}>
+              <Text style={styles.emptyListText}>No contacts found!</Text>
+            </View>
+          )}
         />
       )}
     </View>
