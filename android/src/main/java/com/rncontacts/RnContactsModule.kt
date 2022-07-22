@@ -1,24 +1,32 @@
 package com.rncontacts
 
-import com.facebook.react.bridge.ReactApplicationContext
-import com.facebook.react.bridge.ReactContextBaseJavaModule
-import com.facebook.react.bridge.ReactMethod
-import com.facebook.react.bridge.Promise
+import com.facebook.react.bridge.*
+import com.facebook.react.module.annotations.ReactModule
+import com.rncontacts.models.Contact
 
-class RnContactsModule(reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext) {
+@ReactModule(name = RnContactsModule.TAG)
+class RnContactsModule(reactContext: ReactApplicationContext) :
+  ReactContextBaseJavaModule(reactContext) {
 
-    override fun getName(): String {
-        return "RnContacts"
+  private val contactsManager = ContactsManager()
+  private val utils = Util()
+  private var allContactsList = ArrayList<Contact>()
+
+  companion object {
+    const val TAG = "RnContactsModule"
+  }
+
+  override fun getName(): String {
+    return "RnContacts"
+  }
+
+  @ReactMethod
+  fun getAllContacts(promise: Promise) {
+
+    if (utils.checkPermission(reactApplicationContext)) {
+      allContactsList = contactsManager.getPhoneContacts(currentActivity)
     }
 
-    // Example method
-    // See https://reactnative.dev/docs/native-modules-android
-    @ReactMethod
-    fun multiply(a: Int, b: Int, promise: Promise) {
-    
-      promise.resolve(a * b)
-    
-    }
-
-    
+    promise.resolve(utils.formatContacts(allContactsList))
+  }
 }
