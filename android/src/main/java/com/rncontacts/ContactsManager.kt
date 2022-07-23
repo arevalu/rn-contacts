@@ -3,6 +3,7 @@ package com.rncontacts
 import android.app.Activity
 import android.database.Cursor
 import android.provider.ContactsContract
+import android.util.Log
 import com.rncontacts.models.Contact
 
 class ContactsManager {
@@ -10,6 +11,7 @@ class ContactsManager {
   private var allContactsList = ArrayList<Contact>()
 
   fun getPhoneContacts(activity: Activity?): ArrayList<Contact> {
+    Log.d("ContactsManager", "getPhoneContacts")
     val currentActivity: Activity =
       activity ?: throw Exception("Failed to request contacts.")
 
