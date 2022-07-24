@@ -26,10 +26,8 @@ interface UsePermissionsHook {
  */
 
 export const usePermission = (permitType: PermitType): UsePermissionsHook => {
-  const [loading, setLoading] = useState(false);
-  const [permissionGranted, setPermissionGranted] = useState<
-    boolean | undefined
-  >();
+  const [loading, setLoading] = useState(true);
+  const [permissionGranted, setPermissionGranted] = useState<boolean>();
 
   const checkPermission = useCallback(async (): Promise<boolean> => {
     setLoading(true);
