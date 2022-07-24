@@ -17,6 +17,11 @@ const FIRST_LETTER_INDEX = 0;
 
 export const Home: FunctionComponent = () => {
   const { contacts, error, loading, permissionGranted } = useContacts();
+  const showContactList =
+    !error &&
+    !loading &&
+    contacts !== undefined &&
+    permissionGranted !== undefined;
 
   const getNameInitial = useCallback(
     (firstName: string): string => firstName.charAt(FIRST_LETTER_INDEX),
@@ -31,7 +36,7 @@ export const Home: FunctionComponent = () => {
           <ActivityIndicator />
         </View>
       )}
-      {!error && !loading && contacts !== undefined && (
+      {showContactList && (
         <>
           <Text style={styles.listTitle}>Contacts</Text>
           <FlatList

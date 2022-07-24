@@ -1,4 +1,5 @@
 import { useCallback, useState } from 'react';
+import type { PermissionStatus } from 'react-native-permissions';
 
 import {
   getPermissionsStatus,
@@ -15,7 +16,7 @@ import type { PermitType } from './types';
 
 interface UsePermissionsHook {
   loading: boolean;
-  permissionGranted: boolean;
+  permissionGranted: boolean | undefined;
   checkPermission: () => Promise<boolean>;
   requirePermission: () => Promise<void>;
 }
@@ -26,13 +27,18 @@ interface UsePermissionsHook {
 
 export const usePermission = (permitType: PermitType): UsePermissionsHook => {
   const [loading, setLoading] = useState(false);
-  const [permissionGranted, setPermissionGranted] = useState(false);
+  const [permissionGranted, setPermissionGranted] = useState<
+    boolean | undefined
+  >();
 
   const checkPermission = useCallback(async (): Promise<boolean> => {
     setLoading(true);
-    const checkPermissionResponse = await verifyPermission(permitType);
 
-    if (checkPermissionResponse) {
+    let checkPermissionResponse: PermissionStatus | undefined;
+
+    try {
+      checkPermissionResponse = await verifyPermission(permitType);
+    } finally {
       setLoading(false);
     }
 
@@ -43,10 +49,14 @@ export const usePermission = (permitType: PermitType): UsePermissionsHook => {
     const permissionStatus = await getPermissionsStatus(permitType);
     const permissionRequestable = isPermissionRequestable(permissionStatus);
 
+    let requestResponse: PermissionStatus | undefined;
+
     if (!permissionGranted && permissionRequestable) {
       setLoading(true);
-      const requestResponse = await requestPermission(permitType);
-      if (requestResponse) {
+
+      try {
+        requestResponse = await requestPermission(permitType);
+      } finally {
         setLoading(false);
       }
 

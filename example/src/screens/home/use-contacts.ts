@@ -12,7 +12,7 @@ interface UseContactsHook {
   contacts?: Contact[];
   error?: string;
   loading: boolean;
-  permissionGranted: boolean;
+  permissionGranted: boolean | undefined;
 }
 
 /**
@@ -49,7 +49,6 @@ export const useContacts = (): UseContactsHook => {
   useEffect(() => {
     checkPermission();
 
-    setLoading(true);
     if (permissionGranted) {
       fetchContacts();
     } else {
