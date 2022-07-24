@@ -30,6 +30,8 @@ class RnContacts: NSObject {
                 let keys = [CNContactGivenNameKey, CNContactFamilyNameKey, CNContactPhoneNumbersKey]
                 let request = CNContactFetchRequest(keysToFetch: keys as [CNKeyDescriptor])
                 
+                request.sortOrder = CNContactSortOrder.givenName
+                
                 do {
                     try contactStore.enumerateContacts(with: request, usingBlock: { (contact, stopPointer) in
                         if (contact.phoneNumbers.first?.value.stringValue) != nil {

@@ -23,10 +23,10 @@ class RnContactsModule(reactContext: ReactApplicationContext) :
   @ReactMethod
   fun getAllContacts(promise: Promise) {
 
-    if (utils.checkPermission(reactApplicationContext)) {
+    if (allContactsList.isEmpty() && utils.checkPermission(reactApplicationContext)) {
       allContactsList = contactsManager.getPhoneContacts(currentActivity)
     }
 
-    promise.resolve(utils.formatContacts(allContactsList))
+    promise.resolve(utils.formatContacts(allContactsList.distinctBy { it.id } as ArrayList<Contact>))
   }
 }
